@@ -35,8 +35,8 @@ trait ThrowsHttpExceptions
     }
 
     /**
-     * @param string $methodName
-     * @param string $args
+     * @param  string  $methodName
+     * @param  string  $args
      */
     protected function throwNotFoundHttpException($methodName = '', $args = '')
     {

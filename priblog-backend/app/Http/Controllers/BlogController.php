@@ -6,7 +6,6 @@ use App\Http\Requests\Blog\BlogRequest;
 use App\Http\Requests\Blog\BlogStoreRequest;
 use App\Http\Requests\Blog\BlogUpdateRequest;
 use App\Http\Resources\Blog\BlogResource;
-use App\Http\Resources\Comment\CommentResource;
 use App\Http\Services\BlogService;
 use App\Models\Blog;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -24,7 +23,7 @@ class BlogController extends Controller
         $this->authorize('viewAny', Blog::class);
         $blogs = $blogService->list($request);
 
-        return CommentResource::collection($blogs)
+        return BlogResource::collection($blogs)
             ->response();
     }
 
