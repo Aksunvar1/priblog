@@ -28,3 +28,13 @@ paratest: tests the application in parallel
 npm install && npm run dev
 <hr>
 
+Application authorization system runs on laravel sanctum. It provides a similar token to example below
+<hr>
+4|PjVhSTiTDUfhOJddKMrWoR7Ak0CV9HG01G8DtahV
+<hr>
+Postman Collection link:
+<hr>
+https://documenter.getpostman.com/view/8483728/2s93zB627o#929b15d4-05ec-446c-bc8d-a3c0ad0f06e0
+<hr>
+
+
