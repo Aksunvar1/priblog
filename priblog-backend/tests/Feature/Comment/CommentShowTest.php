@@ -24,7 +24,7 @@ class CommentShowTest extends TestCase
         \Http::preventStrayRequests();
     }
 
-    public function test_create_user_and_create_blog_and_show()
+    public function test_create_user_and_create_comment_and_show()
     {
         $data = [
             'blog_id' => 1,

@@ -24,7 +24,7 @@ class CommentUpdateTest extends TestCase
         \Http::preventStrayRequests();
     }
 
-    public function test_create_user_and_create_blog_and_update()
+    public function test_create_user_and_create_comment_and_update()
     {
         $data = [
             'blog_id' => 1,
