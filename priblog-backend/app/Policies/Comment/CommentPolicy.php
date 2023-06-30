@@ -35,7 +35,7 @@ class CommentPolicy
             return $this->allow();
         }
 
-        return $this->deny('not allowed');
+        return $this->deny('not allowed to update others comments');
     }
 
     public function delete(?User $user, Comment $comment): Response

@@ -24,7 +24,14 @@ class BlogStoreRequest extends FormRequest
         return [
             'user_id' => 'integer|exists:users,id',
             'title' => 'string|required|min:5',
-            'contetnt' => 'string|required',
+            'content' => 'string|required',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => auth()->user()->id,
+        ]);
     }
 }

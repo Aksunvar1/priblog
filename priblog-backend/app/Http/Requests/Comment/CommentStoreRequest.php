@@ -27,4 +27,11 @@ class CommentStoreRequest extends FormRequest
             'comment' => 'string|required',
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => auth()->user()->id,
+        ]);
+    }
 }

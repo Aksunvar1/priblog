@@ -11,4 +11,9 @@ class BlogFilters extends QueryFilters
     {
         return $this->builder->where('blogs.user_id', $filter);
     }
+
+    protected function mandatoryFilters(): ?Builder
+    {
+        return null;
+    }
 }

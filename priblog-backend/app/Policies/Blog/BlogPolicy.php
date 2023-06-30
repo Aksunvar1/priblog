@@ -35,7 +35,7 @@ class BlogPolicy
             return $this->allow();
         }
 
-        return $this->deny('not allowed');
+        return $this->deny('not allowed update others blogs');
     }
 
     public function delete(?User $user, Blog $blog): Response

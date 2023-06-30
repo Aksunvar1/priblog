@@ -28,7 +28,7 @@ class CommentService
             ->withFilters($filter)
             ->with([
                 'user',
-                'comments',
+                'blog',
             ]);
 
         return $this->commentRepository->getAll(['*']);
@@ -46,7 +46,7 @@ class CommentService
 
             return $comment->loadMissing([
                 'user',
-                'comments',
+                'blog',
             ]);
         });
     }
@@ -63,7 +63,7 @@ class CommentService
         return $comment
             ->loadMissing([
                 'user',
-                'comments',
+                'blog',
             ]);
     }
 
@@ -74,7 +74,7 @@ class CommentService
         return $comment
             ->loadMissing([
                 'user',
-                'comments',
+                'blog',
             ])
             ->refresh();
     }
