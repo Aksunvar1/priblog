@@ -11,7 +11,7 @@ class BlogRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class BlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'integer|exists:users,id',
+            'title' => 'string',
+            'contetnt' => 'string',
         ];
     }
 }

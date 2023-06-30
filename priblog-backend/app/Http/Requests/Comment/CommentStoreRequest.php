@@ -11,7 +11,7 @@ class CommentStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class CommentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'blog_id' => 'integer|exists:blogs,id',
+            'user_id' => 'integer|exists:users,id',
+            'comment' => 'string|required',
         ];
     }
 }
