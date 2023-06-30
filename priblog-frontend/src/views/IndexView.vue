@@ -5,7 +5,7 @@
       <div class="bg-white px-4 py-5 sm:p-6">
         <div class="flex justify-between">
           <ul>
-            <li v-for="blog in blogs">
+            <li v-for="blog in blogs" v-bind:key="blog.id">
               <a v-bind:href="'localhost:8000/api/blogs/'+ blog.id">
                 {{ blog.title }}
               </a>
