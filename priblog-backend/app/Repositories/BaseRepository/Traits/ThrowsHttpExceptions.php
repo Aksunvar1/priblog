@@ -2,8 +2,6 @@
 
 namespace App\Repositories\BaseRepository\Traits;
 
-use App\Enums\ResponseCodes;
-
 trait ThrowsHttpExceptions
 {
     private array $baseThrowableMethods = ['getById', 'getItemByColumn'];
@@ -37,8 +35,8 @@ trait ThrowsHttpExceptions
     }
 
     /**
-     * @param  string  $methodName
-     * @param  string  $args
+     * @param string $methodName
+     * @param string $args
      */
     protected function throwNotFoundHttpException($methodName = '', $args = '')
     {
@@ -58,7 +56,7 @@ trait ThrowsHttpExceptions
 
         $message = $this->createExceptionMessage($format, $data);
 
-        abort(prepareCustomResponse($message, 404, ResponseCodes::ENTITY_NOT_FOUND));
+        abort(response(['message' => $message, 'code' => 'Not found'], 404));
     }
 
     private function createExceptionMessage($format, $data = []): string
