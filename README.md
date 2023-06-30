@@ -8,7 +8,7 @@ cd priblog-backend/
 cp .env.example .env 
 <hr>
 <h1>Docker and database</h1>
-sail='[ -f sail ] && sh sail || sh vendor/bin/sail' sail up -d --build
+[ -f sail ] && sh sail || sh vendor/bin/sail sail up -d --build
 <hr>
 php artisan migrate:fresh --seed
 <hr>
