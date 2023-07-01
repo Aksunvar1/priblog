@@ -7,7 +7,6 @@ const http = () => {
     }
 
     if (localStorage.getItem('token')) {
-        console.log(localStorage.getItem('token'))
         options.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     }
 

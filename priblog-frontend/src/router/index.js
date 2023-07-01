@@ -1,17 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import IndexView from "@/views/IndexView.vue";
+import ShowView from "@/views/ShowView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: HomeView
-        },
         {
             path: '/register',
             name: 'register',
@@ -23,11 +18,28 @@ const router = createRouter({
             component: LoginView
         },
         {
-            path: '/index',
-            name: 'index',
+            path: '/',
+            name: 'blogs.index',
             component: IndexView
         },
+        {
+            path: '/blogs/:id',
+            name: 'blogs.show',
+            component: ShowView
+        },
     ]
+})
+
+router.beforeEach((to, from) => {
+    if (to.name === 'register' || to.name === 'login') {
+        return true
+    }
+
+    if (!localStorage.getItem('token')) {
+        return {
+            name: 'login'
+        }
+    }
 })
 
 export default router

@@ -48,7 +48,7 @@ class Blog extends Model
     protected $casts = [
         'user_id' => 'int',
         'title' => 'string',
-        'content' => 'int',
+        'content' => 'string',
     ];
 
     public function user(): BelongsTo

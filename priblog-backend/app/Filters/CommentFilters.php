@@ -11,6 +11,10 @@ class CommentFilters extends QueryFilters
     {
         return $this->builder->where('comments.user_id', $filter);
     }
+    public function filterByBlogId($filter): Builder
+    {
+        return $this->builder->where('comments.blog_id', $filter);
+    }
 
     protected function mandatoryFilters(): ?Builder
     {

@@ -6,7 +6,7 @@
         <div class="flex justify-between">
           <ul>
             <li v-for="blog in blogs" v-bind:key="blog.id">
-              <a v-bind:href="'localhost:8000/api/blogs/'+ blog.id">
+              <a v-bind:href="'/blogs/'+ blog.id">
                 {{ blog.title }}
               </a>
             </li>
@@ -21,7 +21,7 @@ import {useRouter} from 'vue-router'
 import {onMounted, ref} from "vue";
 import http from "@/helpers/http";
 
-let blogs = null
+let blogs = ref(null)
 onMounted(() => {
   fetchBlogs()
 })
@@ -30,12 +30,11 @@ const fetchBlogs = () => {
   return http().get('/api/blogs')
       .then((response) => {
         console.log(response.data)
-        blogs = response.data.data
+        blogs.value = response.data.data
       })
       .catch((error) => {
         console.error(error)
       })
 }
-const items = ref(blogs)
 const router = useRouter()
 </script>
