@@ -4,6 +4,11 @@
     <div class="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
       <div class="bg-white px-4 py-5 sm:p-6">
         <div class="flex justify-between">
+          <div v-if="user && user.id === blog.user_id">
+            <button>
+              Edit
+            </button>
+          </div>
           <p>
             Content: {{ blog.content }}
           </p>
@@ -25,9 +30,11 @@ import http from "@/helpers/http";
 
 let blog = ref(null)
 let comments = ref(null)
+let user = ref(null)
 onMounted(() => {
   fetchBlog()
   fetchComments()
+  fetchUser()
 })
 
 const fetchBlog = () => {
@@ -50,6 +57,16 @@ const fetchComments = () => {
       .then((response) => {
         console.log(response.data)
         comments.value = response.data.data
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+}
+const fetchUser = () => {
+  return http().get('/api/user/')
+      .then((response) => {
+        console.log(response.data)
+        user.value = response.data
       })
       .catch((error) => {
         console.error(error)
