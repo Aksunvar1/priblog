@@ -37,4 +37,5 @@ Postman Collection link:
 https://documenter.getpostman.com/view/8483728/2s93zB627o#929b15d4-05ec-446c-bc8d-a3c0ad0f06e0
 <hr>
 
+<h2> Development will continue in develop branch</h2>
 
