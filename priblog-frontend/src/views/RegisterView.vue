@@ -31,11 +31,18 @@
 <style>
 </style>
 <script setup>
-import {reactive} from 'vue'
+import {onMounted, reactive} from 'vue'
 import axios from 'axios'
 import {useRouter} from 'vue-router';
 
 const router = useRouter()
+onMounted(() => {
+  if (localStorage.getItem('token')) {
+    router.push({
+      name: 'blogs.index'
+    })
+  }
+})
 const credentials = reactive({
   name: null,
   email: null,

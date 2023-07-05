@@ -5,7 +5,7 @@
       <div class="bg-white px-4 py-5 sm:p-6">
         <div class="flex justify-between">
           <div v-if="user && user.id === blog.user_id">
-            <button>
+            <button @click="edit">
               Edit
             </button>
           </div>
@@ -72,5 +72,12 @@ const fetchUser = () => {
         console.error(error)
       })
 }
+
+function edit() {
+  router.push({
+    name: 'blogs.edit'
+  })
+}
+
 const router = useRouter()
 </script>

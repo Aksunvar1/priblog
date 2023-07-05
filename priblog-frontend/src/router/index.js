@@ -1,8 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
-import IndexView from "@/views/IndexView.vue";
-import ShowView from "@/views/ShowView.vue";
+import IndexView from "@/views/Blogs/IndexView.vue";
+import ShowView from "@/views/Blogs/ShowView.vue";
+import EditView from "@/views/Blogs/EditView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
             path: '/blogs/:id',
             name: 'blogs.show',
             component: ShowView
+        },
+        {
+            path: '/blogs/:id',
+            name: 'blogs.edit',
+            component: EditView
         },
     ]
 })
