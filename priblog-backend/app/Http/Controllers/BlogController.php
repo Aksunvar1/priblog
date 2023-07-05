@@ -11,17 +11,21 @@ use App\Models\Blog;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class BlogController extends Controller
 {
+    public function __construct(private readonly BlogService $blogService)
+    {
+    }
+
     /**
      * @throws AuthorizationException
      */
     public function index(BlogRequest $request): JsonResponse
     {
-        $blogService = app(BlogService::class);
         $this->authorize('viewAny', Blog::class);
-        $blogs = $blogService->list($request);
+        $blogs = $this->blogService->list($request);
 
         return BlogResource::collection($blogs)
             ->response();
@@ -29,13 +33,13 @@ class BlogController extends Controller
 
     /**
      * @throws AuthorizationException
+     * @throws Throwable
      */
     public function store(BlogStoreRequest $request): JsonResponse
     {
-        $blogService = app(BlogService::class);
         $this->authorize('create', Blog::class);
 
-        $store = $blogService->store($request);
+        $store = $this->blogService->store($request);
 
         return BlogResource::make($store)
             ->response();
@@ -46,8 +50,7 @@ class BlogController extends Controller
      */
     public function show(BlogRequest $request, int $blogId): JsonResponse
     {
-        $blogService = app(BlogService::class);
-        $blog = $blogService->show($request, $blogId);
+        $blog = $this->blogService->show($request, $blogId);
         $this->authorize('view', $blog);
 
         return BlogResource::make($blog)
@@ -59,11 +62,10 @@ class BlogController extends Controller
      */
     public function update(BlogUpdateRequest $request, int $blogId): JsonResponse
     {
-        $blogService = app(BlogService::class);
-        $blog = $blogService->show($request, $blogId);
+        $blog = $this->blogService->show($request, $blogId);
         $this->authorize('update', $blog);
 
-        $update = $blogService->update($request, $blog);
+        $update = $this->blogService->update($request, $blog);
 
         return BlogResource::make($update)
             ->response();
@@ -74,11 +76,11 @@ class BlogController extends Controller
      */
     public function destroy(Request $request, int $blogId): JsonResponse
     {
-        $blogService = app(BlogService::class);
-        $blog = $blogService->show($request, $blogId);
+        /** @var Blog $blog */
+        $blog = $this->blogService->show($request, $blogId);
         $this->authorize('delete', $blog);
 
-        $result = $blogService->delete($blog);
+        $result = $this->blogService->delete($blog);
 
         if ($result) {
             return response()

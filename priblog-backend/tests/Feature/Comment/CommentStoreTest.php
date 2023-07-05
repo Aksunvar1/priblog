@@ -54,4 +54,64 @@ class CommentStoreTest extends TestCase
         $this->post(self::$url, $data)
             ->assertRedirectToRoute('login');
     }
+
+    /**
+     * @dataProvider validationDataProvider
+     */
+    public function testCommentStoreWithParams(array $data, int $status, string $message = '')
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $token = $user->createToken('test-token')->plainTextToken;
+        $response = $this->withToken($token)
+            ->withHeader('Accept', 'application/json')
+            ->post(self::$url, $data);
+        $response->assertStatus($status);
+        if ($response->getStatusCode() != 201) {
+            $this->assertSame($message, $response->json()['message']);
+        }
+    }
+
+    public static function validationDataProvider(): array
+    {
+        return [
+            [
+                [
+                    'blog_id' => 1,
+                    'comment' => 'testing comment for the comment create endpoint',
+                ],
+                201,
+            ],
+            [
+                [
+                    'comment' => 'testing comment for the comment create endpoint',
+                ],
+                422,
+                'The blog id field is required.',
+            ],
+            [
+                [
+                    'blog_id' => 999,
+                    'comment' => 'testing comment for the comment create endpoint',
+                ],
+                422,
+                'The selected blog id is invalid.',
+            ],
+            [
+                [
+                    'blog_id' => 1,
+                ],
+                422,
+                'The comment field is required.',
+            ],
+            [
+                [
+                    'blog_id' => 1,
+                    'comment' => 123123,
+                ],
+                422,
+                'The comment field must be a string.',
+            ],
+        ];
+    }
 }

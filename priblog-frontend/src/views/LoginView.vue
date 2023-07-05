@@ -41,7 +41,7 @@ const credentials = reactive({
 onMounted(() => {
   if (localStorage.getItem('token')) {
     router.push({
-      name: 'index'
+      name: 'blogs.index'
     })
   }
 })
@@ -59,7 +59,7 @@ const handleLogin = () => {
         console.log(response);
         localStorage.setItem('token', response.data.access_token)
         router.push({
-          name: 'index'
+          name: 'blogs.index'
         })
       })
       .catch((error) => {

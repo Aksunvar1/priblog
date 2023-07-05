@@ -11,31 +11,34 @@ use App\Models\Comment;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class CommentController extends Controller
 {
-    /**
-     * @throws AuthorizationException
-     */
-    public function index(CommentRequest $request): JsonResponse
+    public function __construct(private readonly CommentService $commentService)
     {
-        $blogService = app(CommentService::class);
-        $this->authorize('viewAny', Comment::class);
-        $blogs = $blogService->list($request);
-
-        return CommentResource::collection($blogs)
-            ->response();
     }
 
     /**
      * @throws AuthorizationException
      */
+    public function index(CommentRequest $request): JsonResponse
+    {
+        $this->authorize('viewAny', Comment::class);
+        $comments = $this->commentService->list($request);
+
+        return CommentResource::collection($comments)
+            ->response();
+    }
+
+    /**
+     * @throws AuthorizationException|Throwable
+     */
     public function store(CommentStoreRequest $request): JsonResponse
     {
-        $blogService = app(CommentService::class);
         $this->authorize('create', Comment::class);
 
-        $store = $blogService->store($request);
+        $store = $this->commentService->store($request);
 
         return CommentResource::make($store)
             ->response();
@@ -44,26 +47,24 @@ class CommentController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function show(CommentRequest $request, int $blogId): JsonResponse
+    public function show(CommentRequest $request, int $commentId): JsonResponse
     {
-        $blogService = app(CommentService::class);
-        $blog = $blogService->show($request, $blogId);
-        $this->authorize('view', $blog);
+        $comment = $this->commentService->show($request, $commentId);
+        $this->authorize('view', $comment);
 
-        return CommentResource::make($blog)
+        return CommentResource::make($comment)
             ->response();
     }
 
     /**
      * @throws AuthorizationException
      */
-    public function update(CommentUpdateRequest $request, int $blogId): JsonResponse
+    public function update(CommentUpdateRequest $request, int $commentId): JsonResponse
     {
-        $blogService = app(CommentService::class);
-        $blog = $blogService->show($request, $blogId);
-        $this->authorize('update', $blog);
+        $comment = $this->commentService->show($request, $commentId);
+        $this->authorize('update', $comment);
 
-        $update = $blogService->update($request, $blog);
+        $update = $this->commentService->update($request, $comment);
 
         return CommentResource::make($update)
             ->response();
@@ -72,13 +73,13 @@ class CommentController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function destroy(Request $request, int $blogId): JsonResponse
+    public function destroy(Request $request, int $commentId): JsonResponse
     {
-        $blogService = app(CommentService::class);
-        $blog = $blogService->show($request, $blogId);
-        $this->authorize('delete', $blog);
+        /** @var Comment $comment */
+        $comment = $this->commentService->show($request, $commentId);
+        $this->authorize('delete', $comment);
 
-        $result = $blogService->delete($blog);
+        $result = $this->commentService->delete($comment);
 
         if ($result) {
             return response()

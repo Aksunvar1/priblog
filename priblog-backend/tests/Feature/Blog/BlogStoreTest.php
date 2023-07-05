@@ -54,4 +54,64 @@ class BlogStoreTest extends TestCase
         $this->post(self::$url, $data)
             ->assertRedirectToRoute('login');
     }
+
+    /**
+     * @dataProvider validationDataProvider
+     */
+    public function testBlogStoreWithParams(array $data, int $status, string $message = '')
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $token = $user->createToken('test-token')->plainTextToken;
+        $response = $this->withToken($token)
+            ->withHeader('Accept','application/json')
+            ->post(self::$url, $data);
+        $response->assertStatus($status);
+        if ($response->getStatusCode() != 201) {
+            $this->assertSame($message, $response->json()['message']);
+        }
+    }
+
+    public static function validationDataProvider(): array
+    {
+        return [
+            [
+                [
+                    'title' => 'test title',
+                    'content' => 'testing content for the blog create endpoint',
+                ],
+                201,
+            ],
+            [
+                [
+                    'content' => 'testing content for the blog create endpoint',
+                ],
+                422,
+                'The title field is required.',
+            ],
+            [
+                [
+                    'title' => 'test title',
+                ],
+                422,
+                'The content field is required.',
+            ],
+            [
+                [
+                    'title' => 123555,
+                    'content' => 'testing content for the blog create endpoint',
+                ],
+                422,
+                'The title field must be a string.',
+            ],
+            [
+                [
+                    'title' => 'test title',
+                    'content' => 123,
+                ],
+                422,
+                'The content field must be a string.',
+            ],
+        ];
+    }
 }
