@@ -15,13 +15,13 @@ php artisan migrate:fresh --seed
 php artisan serve --port=8000
 
 <h1>Composer shortcuts</h1>
-composer test: runs the following scripts "@pint","@phpmd","@paratest"
+composer test: runs all the following scripts "@pint","@phpmd","@paratest"
 <hr>
-pint: wrapper around php code sniffer
+composer pint: laravel code style fixer
 <hr>
-phpmd: mass detection
+composer phpmd: Mess detection
 <hr>
-paratest: tests the application in parallel
+composer paratest: tests the application in parallel
 <hr>
 
 <h1>For Frontend</h1>
@@ -37,4 +37,5 @@ Postman Collection link:
 https://documenter.getpostman.com/view/8483728/2s93zB627o#929b15d4-05ec-446c-bc8d-a3c0ad0f06e0
 <hr>
 
+<h2> Development will continue in develop branch</h2>
 
